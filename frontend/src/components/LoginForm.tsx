@@ -1,74 +1,80 @@
-import axios, { AxiosError } from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, FormEvent } from 'react';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+interface LoginResponse {
+  access_token: string;
+}
+
+interface ErrorResponse {
+  message: string;
+}
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const location = useLocation();
+  const [status,setStatus] = useState('');
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', {  email: email, password: password });
-      console.log(response)
-      console.log(response.status)
+      const response = await axios.post('http://localhost:8000/auth/login', {
+        email: email,
+        password: password,
+      });
 
-      if (response.status === 201) {
-        const { token } = response.data;
-        console.log(token)
-        // Store the token in local storage or state
-        // Redirect to the desired page
-        localStorage.setItem('token', token);
-
-        navigate('/');
-      } else {
-        const { message }: any = response.data; // Update the type annotation to 'any'
-        console.error('Login error1:', message);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        const axiosError = error as AxiosError;
-        if (axiosError.response) {
-          
-          const { message }: any = axiosError.response.data; // Update the type annotation to 'any'
-        
-          console.error('Error response from server', message);
-        } else {
-
-       
-          console.error('Network error or other errors', axiosError.message);
-        }
-      } else {
-    
-        console.error('Non-Axios error', error);
-      }
+      // Store the access token in local storage or state
+      const { access_token } = response.data;
+      await localStorage.setItem('access_token', access_token);
+      setStatus('Success');
+      // Redirect to the desired page or perform other actions
+      navigate('/',{ replace: true });
+      
+    } catch (error: any) {
+      
+      console.error('Registration error:', error.response?.data.message || error.message);
+      setStatus(error.response?.data.message || error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <div className="max-w-xs mx-auto">
+    <h2 className="text-2xl font-bold mb-4">Login</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block mb-1">Email:</label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border border-gray-300 px-3 py-2 rounded"
+        />
+      </div>
+      <div>
+        <label className="block mb-1">Password:</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border border-gray-300 px-3 py-2 rounded"
+        />
+      </div>
+      {status && <div className="text-red-500 mb-4">{status}</div>}
+      <button
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-1/1"
+      >
+        Login
+      </button>
+    </form>
+    <button onClick={() => navigate('/register')}
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded my-2 w-1/1"
+      >Become member</button>
+  </div>
   );
 };
 

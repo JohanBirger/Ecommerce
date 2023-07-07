@@ -4,50 +4,66 @@ import axios, { AxiosError } from 'axios';
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [status, setStatus] = useState<string>('');
 
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/signup', {
+      const response = await axios.post('http://localhost:8000/auth/register', {
+        username: username,
         email: email,
         password: password,
       });
 
       console.log('Registration successful:', response.data.message);
+      setStatus('Success');
       // Handle successful registration (e.g., show success message, redirect to login page)
     } catch (error: any) {
-      if (error.response) {
-        console.error('Registration error:', error.response.data.message);
-        // Handle registration error (e.g., show error message to the user)
-      } else {
-        console.error('Registration error:', error.message);
-        // Handle other types of errors
-      }
+      console.error('Registration error:', error.response?.data.message || error.message);
+      setStatus(error.response?.data.message || error.message);
     }
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleRegister}>
+    <div className="max-w-xs mx-auto">
+      <h2 className="text-2xl font-bold mb-4">Register</h2>
+      <form onSubmit={handleRegister} className="space-y-4">
         <div>
-          <label>Email:</label>
+          <label className="block mb-1">Email:</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="border border-gray-300 px-3 py-2 rounded"
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label className="block mb-1">Username:</label>
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="border border-gray-300 px-3 py-2 rounded"
+          />
+        </div>
+        <div>
+          <label className="block mb-1">Password:</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="border border-gray-300 px-3 py-2 rounded"
           />
         </div>
-        <button type="submit">Register</button>
+        {status && <div className="text-red-500 mb-4">{status}</div>}
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Register
+        </button>
       </form>
     </div>
   );

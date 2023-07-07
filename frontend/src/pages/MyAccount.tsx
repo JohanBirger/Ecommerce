@@ -1,15 +1,15 @@
 // frontend/src/pages/LoginPage.tsx
 import React from 'react';
-import LoginForm from '../components/LoginForm';
+import Profile from '../components/Profile';
 
 
-const LoginPage: React.FC = () => {
+const MyAccount: React.FC = () => {
   return (
     <div className='container m-auto py-10'>
-      <LoginForm/>
+      <Profile/>
       
     </div>
   );
 };
 
-export default LoginPage;
+export default MyAccount;
