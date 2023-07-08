@@ -13,27 +13,29 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Login Modal"
-      style={{
+        isOpen={isOpen}
+        onRequestClose={onRequestClose}
+        contentLabel="Login Modal"
+        style={{
         overlay: {
-          backgroundColor: 'rgba(0, 0, 0, 0)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
         },
         content: {
-          width: '24rem',
-          height: '30rem',
-          margin: 'auto',
-          display: 'flex',
-          flexDirection: 'column', 
-          alignItems: 'center',
-          justifyContent: 'center',
+            width: 'auto',
+            maxWidth: '24rem',
+            maxHeight: '30rem',
+            height: 'auto',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem',
         },
-      }}
+        }}
     >
-      <LoginForm />
-      
-    </Modal>    
+        <LoginForm onRequestClose={onRequestClose} />
+    </Modal>   
   );
 };
 

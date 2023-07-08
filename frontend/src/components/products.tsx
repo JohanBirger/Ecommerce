@@ -25,30 +25,28 @@ const ProductCard: React.FC<Product & { onAddToCart: () => void }> = ({
 
     setTimeout(() => {
       setShowModal(false);
-    }, 1300);
+    }, 200);
   };
   return (
-    <div className="bg-white rounded-md border p-5 flex flex-col justify-between">
+    <div className="w-full mx-auto bg-white rounded-md border border-black-200 p-5 flex flex-col justify-between m-5">
     <div>
-      <h3 className="text-lg font-200 text-black">{name}</h3>
-      <p className="text-gray-600">${price}</p>
+      <h3 className="text-lg font-200 text-black ">{name}</h3>
+      <p className="text-gray-600 ">${price}</p>
     
     </div>
-    <div className='items-center'>
+    <div className='items-center pt-5'>
     {showModal ? (
-        <div className="bg-green-200 text-black text-center px-4 py-2 rounded-md z-110">
+        <div className="btn-wide text-black text-center rounded-md z-110">
         <Icon icon={ic_done}/>
         </div>
-      ):<div>
-      <span className='px-12'></span>
-      </div>
-      }
-    <button
+      ):<button
       onClick={handleAddToCart}
-      className="btn-wide m-4"
+      className="btn-wide"
     >
       Add to Cart
     </button>
+      }
+    
     </div>
   </div>
   
@@ -121,8 +119,8 @@ const Products: React.FC = () => {
   };
 
   return (
-    <div className="bg-white mx-auto flex flex-col items-center">
-    <p className="text-2xl font-bold mb-4">Products</p>
+    <div className="w-full bg-white mx-auto flex flex-col items-center" id="products">
+    <p className="text-2xl font-bold mb-4 p-10">Products</p>
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {products.map((product) => (
         <ProductCard

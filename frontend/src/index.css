@@ -17,8 +17,8 @@ span {
 }
 
 
-.btn-wide,.btn-wide-action,.btn-wide-contrast {
-  width: 17rem;
+.btn-wide,.btn-wide-action,.btn-wide-contrast,.btn-small,.btn-small-action {
+  width: 100%;
   border: 1px solid #041836;
   background-color: transparent;
   color: #041836;
@@ -54,6 +54,25 @@ span {
   box-shadow: 0px 0px 8px #16ECB3, inset 0px 0px 8px #FFFFFF !important;
 }
 
+.btn-small{
+  width: 60%;
+}
+
+.btn-small-action{
+  width: 10rem;
+  background-color: #041836;
+  color: #fff;
+}
+
+.btn-small:hover{
+  background-color: #041836;
+  color: #fff;
+}
+
+.btn-small-action:hover{
+  background-color: #051c3f;
+  color: #fff;
+}
 
 
 .moralis-blue{

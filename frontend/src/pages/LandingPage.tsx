@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Products from '../components/Products';
 import LoginModal from '../components/LoginModal'
 
+
 const LandingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -13,27 +14,26 @@ const LandingPage: React.FC = () => {
     setIsModalOpen(false);
   };
   return (
-    <div className="bg-white min-h-screen">
+    <div className="w-full bg-white min-h-screen">
       <header className="moralis-blue text-white py-10 min-h-screen">
-        <h1 className="text-6xl font-black  text-center mt-20">Exquisite Melons! </h1>
-        <h1 className= "text-6xl font-black text-center">Only for members.</h1>
-        <div className='text-white flex flex-col items-center mt-10 m-40'>
-        <h1 className= "text-2xl font-200 text-center"> Embark on a Journey of Exquisite Fruit Experiences and Join a Community of Connoisseurs Redefining Palate Pleasure</h1>
+        <h1 className="text-6xl font-black text-center mt-20 pb-5">Exquisite Melons!</h1>
+        <h2 className="text-6xl font-black text-center">Only for members.</h2>
+        <div className="text-white flex flex-col items-center mt-10 mx-4 sm:mx-40">
+          <h3 className="text-2xl font-semibold text-center">Embark on a Journey of Exquisite Fruit Experiences and Join a Community of Connoisseurs Redefining Palate Pleasure</h3>
         </div>
-        <div className='flex justify-center items-center my-10'>
-        <button className="btn-wide-contrast" onClick={openModal}>
-         Become a Melon
-        </button>
+        <div className="flex justify-center items-center py-10">
+          <div className="max-w-sm">
+            <button className="btn-wide-contrast" onClick={openModal}>
+              Become a Melon
+            </button>
+          </div>
         </div>
         <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
       </header>
-      <main className="container mx-auto py-8 w-full bg-white">
+      <main className=''>
         <Products />
       </main>
-      <footer className=" py-4">
-        <p className="text-center text-gray-600">© 2023 Melon. All rights reserved.</p>
-      </footer>
-    </div>
+  </div>
   );
 };
 

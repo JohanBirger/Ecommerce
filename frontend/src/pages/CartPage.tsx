@@ -5,7 +5,7 @@ import CartComponent from '../components/CartComponent';
 
 const LoginPage: React.FC = () => {
   return (
-    <div>
+    <div className='min-h-screen'>
       <CartComponent/>
     </div>
   );

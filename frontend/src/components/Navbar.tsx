@@ -12,6 +12,7 @@ import LoginModal from '../components/LoginModal';
 import { IoClose } from 'react-icons/io5';
 
 
+
 const NavLanding = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [roles, setRoles] = useState<Role[]>([]);
@@ -19,8 +20,8 @@ const NavLanding = () => {
   const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  
 
+  
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -98,20 +99,7 @@ const NavLanding = () => {
           </Link>
         </div>
 
-        {roles.includes(Role.Admin) && (
-          <>
-            <ul>
-              <li>
-                <Link
-                  to="/admin"
-                  className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}
-                >
-                  Update Product
-                </Link>
-              </li>
-            </ul>
-          </>
-        )}
+        
         <button
           className="block sm:hidden text-white hover:text-gray-300 focus:outline-none"
           onClick={toggleMenu}
@@ -142,9 +130,16 @@ const NavLanding = () => {
         <ul className="hidden sm:flex sm:items-center sm:justify-between">
           <li>
             <Link
-              to="/"
+              to="/#products"
               className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3  rounded`}
+              onClick={() => {
+                const productsElement = document.getElementById('products');
+                if (productsElement) {
+                  productsElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
             >
+              
               Products
             </Link>
           </li>
@@ -190,18 +185,55 @@ const NavLanding = () => {
         </ul>
       </div>
 
-      {showMenu && (
-        <ul className="sm:hidden flex flex-col items-center justify-center px-4 py-2">
-          <li>
-            <button
-              onClick={openModal}
-           
-            >
-              <IconUser text="Login" styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`} styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}/>
-              <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
-            </button>
-          </li>
-        </ul>
+      {showMenu && (roles.includes(Role.User) || roles.includes(Role.Admin)) &&  (
+        <>
+        
+        <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
+                <Link
+                  to="/profile"
+                  className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300  px-3 md:px-2 py-1 rounded`}
+                >
+                  My Account
+                </Link>
+              </li>
+              <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
+                <LogoutButton onLogout={handleLogout} style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 md:px-3  rounded`}/>
+              </li>
+       
+        </>
+        )
+      }
+      {showMenu && roles.includes(Role.Admin) &&  (
+       <>
+      
+       <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
+           <Link
+             to="/admin"
+             className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 py-1 rounded`}
+           >
+             Update Products
+           </Link>
+         </li>
+      
+     </>
+        )
+      }
+      {showMenu &&!(roles.includes(Role.User)|| roles.includes(Role.Admin))&&(
+        <>
+        
+        <ul className="sm:hidden top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto">
+    <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
+      <button onClick={openModal}>
+        <IconUser
+          text="Login"
+          styleText={` ${scrolled ? 'text-black' : 'text-white'}  px-2 py-1 rounded`}
+          styleIcon={` ${scrolled ? 'text-black' : 'text-white'}  px-2 py-1 rounded`}
+        />
+        <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      </button>
+    </li>
+  </ul>
+        </>
       )}
     </nav>
     

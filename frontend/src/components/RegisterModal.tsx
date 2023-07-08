@@ -18,28 +18,23 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onRequestClose })
       contentLabel="Register Modal"
       style={{
         overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0)',
+          backgroundColor: 'rgba(0, 0, 0, 0)',
         },
         content: {
-          width: '24rem',
-          height: '30rem',
+          width: 'auto',
+          maxWidth: '24rem',
+          maxHeight: '30rem',
+          height: 'auto',
           margin: 'auto',
           display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
-          flexDirection: 'column', 
           justifyContent: 'center',
+          padding: '2rem',
         },
       }}
     >
-      <RegisterForm />
-      <div className='flex justify-center items-center'>
-      <button
-        onClick={closeRegister}
-        className="btn-wide my-3"
-      >
-        Login
-      </button>
-      </div>
+      <RegisterForm closeRegister={closeRegister} /> {/* Pass the closeRegister prop */}
     </Modal>
   );
 };

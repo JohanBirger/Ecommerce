@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
 import NavLanding from './components/Navbar';
-import RegisterPage from './pages/RegisterPage';
 import CartPage from './pages/CartPage';
 import MyAccount from './pages/MyAccount';
 import AdminPage from './pages/Adminpage';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -15,12 +15,12 @@ function App() {
       <NavLanding/>
       <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/register" element={<RegisterPage />} />
       <Route path="/cart" element={<CartPage/>}/>
       <Route path="/profile" element={<MyAccount />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

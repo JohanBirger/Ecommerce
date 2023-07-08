@@ -46,7 +46,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xs mx-auto">
+    <div className="max-w-xs min-h-screen mx-auto">
       <h1 className="text-2xl font-bold mb-4">Profile</h1>
       {profile ? (
         <div>
