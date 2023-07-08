@@ -28,8 +28,8 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className="max-w-xs mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Register</h2>
-      <form onSubmit={handleRegister} className="space-y-4">
+      <h2 className="text-2xl font-bold mb-4 text-black ">Create Account</h2>
+      <form onSubmit={handleRegister} className="space-y-4 ">
         <div>
           <label className="block mb-1">Email:</label>
           <input
@@ -40,7 +40,7 @@ const RegisterForm: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block mb-1">Username:</label>
+          <label className="block mb-1 text-black ">Username:</label>
           <input
             type="text"
             value={username}
@@ -49,7 +49,7 @@ const RegisterForm: React.FC = () => {
           />
         </div>
         <div>
-          <label className="block mb-1">Password:</label>
+          <label className="block mb-1 text-black ">Password:</label>
           <input
             type="password"
             value={password}
@@ -58,13 +58,16 @@ const RegisterForm: React.FC = () => {
           />
         </div>
         {status && <div className="text-red-500 mb-4">{status}</div>}
+        <div className='flex justify-center items-center'>
         <button
           type="submit"
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="btn-wide-action"
         >
-          Register
+          Create Account
         </button>
+        </div>
       </form>
+      
     </div>
   );
 };

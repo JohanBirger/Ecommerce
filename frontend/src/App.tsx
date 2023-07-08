@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './pages/LoginPage';
 import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
 import NavLanding from './components/Navbar';
@@ -16,7 +15,6 @@ function App() {
       <NavLanding/>
       <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />  
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/cart" element={<CartPage/>}/>
       <Route path="/profile" element={<MyAccount />} />

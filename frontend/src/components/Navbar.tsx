@@ -7,12 +7,28 @@ import jwt_decode from 'jwt-decode';
 import LogoutButton from './LogoutButton';
 import IconCart from '../icons/shoppingcart'
 import IconUser from '../icons/userIcon';
+import Modal from 'react-modal';
+import LoginModal from '../components/LoginModal';
+import { IoClose } from 'react-icons/io5';
+
 
 const NavLanding = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [roles, setRoles] = useState<Role[]>([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+  
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -41,33 +57,61 @@ const NavLanding = () => {
 
   const handleLogout = () => {
     setRoles([]); // Update the roles state when logging out
+    setIsModalOpen(false); // Close the modal when logging out - bug?
   };
 
   useEffect(() => {
     fetchRoles();
   }, [location]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 0;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrolled]);
+
+
+  
+
   return (
-    <nav className="bg-gray-800">
+    <nav className={`moralis-blue ${scrolled ? 'scrolled-nav' : ''}`} style={{ position: 'sticky', top: '0', zIndex: '100' }}>
       <div className="flex items-center justify-between px-4 py-2">
-        <Link to="/">
-          <img src={logo} alt="logo" className="h-8" />
+        <Link to="/" className="flex items-center" >
+          <img src={logo} alt="logo" className="h-8 px-2" />
+          <p className={` ${scrolled ? 'text-black' : "text-white "} text-2xl font-bold`}>Melon</p>
         </Link>
+
+        <div className="text-white hover:text-gray-300 px-2 py-1 rounded">
+          <Link className="block sm:hidden" to="/cart">
+            <IconCart text="" 
+                      styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
+                      styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
+          </Link>
+        </div>
+
         {roles.includes(Role.Admin) && (
-        
-            <>
+          <>
             <ul>
               <li>
                 <Link
                   to="/admin"
-                  className="text-white hover:text-gray-300 px-2 py-1 rounded"
+                  className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}
                 >
                   Update Product
                 </Link>
               </li>
-          </ul>
-            </>
-          ) }
+            </ul>
+          </>
+        )}
         <button
           className="block sm:hidden text-white hover:text-gray-300 focus:outline-none"
           onClick={toggleMenu}
@@ -99,7 +143,7 @@ const NavLanding = () => {
           <li>
             <Link
               to="/"
-              className="text-white hover:text-gray-300 px-2 py-1 rounded"
+              className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3  rounded`}
             >
               Products
             </Link>
@@ -109,36 +153,38 @@ const NavLanding = () => {
               <li>
                 <Link
                   to="/profile"
-                  className="text-white hover:text-gray-300 px-2 py-1 rounded"
+                  className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}
                 >
                   My Account
                 </Link>
               </li>
               <li>
-                <LogoutButton onLogout={handleLogout} />
+                <LogoutButton onLogout={handleLogout} style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3  rounded`}/>
               </li>
             </>
           ) : (
             <>
               <li>
-                <Link
-                  to="/login"
-                  className="text-white hover:text-gray-300 px-2 py-1 rounded"
-                >
-                  <IconUser text="Login"/>
-                  
-                </Link>
+                <button
+                  onClick={openModal}>
+                  <IconUser 
+                    text="Login" 
+                    styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
+                    styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
+                </button>
+                <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
               </li>
             </>
           )}
-          
 
           <li>
             <Link
               to="/cart"
               className="text-white hover:text-gray-300 px-2 py-1 rounded"
             >
-                   <IconCart/>
+              <IconCart text="Shopping Cart" 
+                        styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
+                        styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
             </Link>
           </li>
         </ul>
@@ -147,33 +193,18 @@ const NavLanding = () => {
       {showMenu && (
         <ul className="sm:hidden flex flex-col items-center justify-center px-4 py-2">
           <li>
-            <Link
-              to="/"
-              className="block text-white hover:text-gray-300 py-1 rounded"
+            <button
+              onClick={openModal}
+           
             >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/login"
-              className="block text-white hover:text-gray-300 py-1 rounded"
-            >
-                <IconUser text="Login"/>
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to="/cart"
-              className="block text-white hover:text-gray-300 py-1 rounded"
-            >
-              Cart
-            </Link>
+              <IconUser text="Login" styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`} styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}/>
+              <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
+            </button>
           </li>
         </ul>
       )}
     </nav>
+    
   );
 };
 

@@ -4,9 +4,10 @@ import axios from 'axios';
 
 interface LogoutButtonProps {
   onLogout: () => void;
+  style: string;
 }
 
-const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout }) => {
+const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout,style }) => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -14,14 +15,14 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout }) => {
       await axios.post('http://localhost:8000/auth/logout');
       localStorage.removeItem('access_token');
       onLogout(); // Call the callback function passed as prop
-      navigate('/login', { replace: true });
+      navigate('/', { replace: true });
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
 
   return (
-    <button onClick={handleLogout} className="text-white px-2">
+    <button onClick={handleLogout} className={style}>
       Logout
     </button>
   );

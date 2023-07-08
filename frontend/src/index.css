@@ -4,20 +4,64 @@
 
 body {
   margin: 0;
-  color: #0000;
+  color: black;
   background-color: white;
   
 }
-h1 {
-  color:black;
-}
+
 div {
   color:black;
 }
 span {
-  color: black;
+  color: white;
 }
 
-li {
-  color: black;
+
+.btn-wide,.btn-wide-action,.btn-wide-contrast {
+  width: 17rem;
+  border: 1px solid #041836;
+  background-color: transparent;
+  color: #041836;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
 }
+
+.btn-wide:hover {
+  background-color: #041836;
+  color: #fff;
+
+}
+
+.btn-wide-action{
+  background-color: #041836;
+  color: #fff;
+
+}
+
+.btn-wide-action:hover{
+  background-color: #051c3f;
+    color: #fff;
+
+}
+
+.btn-wide-contrast{
+  background-color: #00AD96;
+  color: #ffffff;
+  border-color: #00AD96;
+}
+
+.btn-wide-contrast:hover{
+  box-shadow: 0px 0px 8px #16ECB3, inset 0px 0px 8px #FFFFFF !important;
+}
+
+
+
+.moralis-blue{
+  background-color: #041836;
+}
+
+
+.scrolled-nav {
+  background-color: white;
+}
+

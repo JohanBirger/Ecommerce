@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import RegisterModal from './RegisterModal';
 
 interface LoginResponse {
   access_token: string;
@@ -16,6 +17,15 @@ const LoginForm: React.FC = () => {
   const [password, setPassword] = useState('');
   const location = useLocation();
   const [status,setStatus] = useState('');
+  const [registerModal, setRegisterModal] = useState(false);
+
+  const openRegisterModal = () => {
+    setRegisterModal(true);
+  };
+
+  const closeRegisterModal = () => {
+    setRegisterModal(false);
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -41,11 +51,13 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xs mx-auto">
-    <h2 className="text-2xl font-bold mb-4">Login</h2>
+    
+    
+    <div className="max-w-xs mx-auto ">
+    <h2 className="text-2xl font-bold mb-4 text-black ">Login</h2>
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block mb-1">Email:</label>
+        <label className="block mb-1 text-black ">Email:</label>
         <input
           type="email"
           value={email}
@@ -54,7 +66,7 @@ const LoginForm: React.FC = () => {
         />
       </div>
       <div>
-        <label className="block mb-1">Password:</label>
+        <label className="block mb-1 text-black ">Password:</label>
         <input
           type="password"
           value={password}
@@ -63,17 +75,16 @@ const LoginForm: React.FC = () => {
         />
       </div>
       {status && <div className="text-red-500 mb-4">{status}</div>}
-      <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-1/1"
-      >
-        Login
-      </button>
+      <div className="flex justify-center items-center">
+      <button type="submit" className="btn-wide-action">Login</button>
+      </div>
+      
+      <RegisterModal isOpen={registerModal} onRequestClose={closeRegisterModal} />
+    
     </form>
-    <button onClick={() => navigate('/register')}
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded my-2 w-1/1"
-      >Become member</button>
+    <div className='flex justify-center items-center'>
+      <button onClick={openRegisterModal} className="btn-wide mt-2"> Create Account</button>
+      </div>
   </div>
   );
 };
