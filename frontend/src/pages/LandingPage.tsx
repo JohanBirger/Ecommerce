@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import Products from '../components/Products';
-import LoginModal from '../components/LoginModal'
 
+import LoginModal from '../components/LoginModal'
+import Products from '../components/Products';
 
 const LandingPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
