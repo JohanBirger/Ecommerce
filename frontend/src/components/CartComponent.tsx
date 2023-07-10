@@ -87,7 +87,7 @@ const CartComponent: React.FC = () => {
       const userId: string = decodedToken.sub; // Extract the user ID from the decoded token
       console.log(decodedToken)
   
-      await axios.delete(`http://localhost:8000/cart/${userId}`, {
+      await axios.delete(`https://prickly-ray-sarong.cyclic.app/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

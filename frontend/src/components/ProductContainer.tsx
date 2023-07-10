@@ -103,7 +103,7 @@ const Products: React.FC = () => {
       };
   
       await axios.post(
-        'http://localhost:8000/cart/',
+        'https://prickly-ray-sarong.cyclic.app/cart/',
         itemDTO,
         {
           headers: {
