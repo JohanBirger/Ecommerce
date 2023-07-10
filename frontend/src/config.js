@@ -1,0 +1,1 @@
+export const BACKEND_URL = "https://prickly-ray-sarong.cyclic.app"; // BACKEND_URL = 'http://localhost:3000'

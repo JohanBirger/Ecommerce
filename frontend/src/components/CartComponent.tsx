@@ -4,6 +4,8 @@ import jwt_decode from 'jwt-decode';
 import CheckoutComponent from './Checkout';
 import {cross} from 'react-icons-kit/icomoon/cross';
 import {Icon} from 'react-icons-kit';
+import { BACKEND_URL } from '../config.js';
+
 
 
 interface Product {
@@ -34,7 +36,7 @@ const CartComponent: React.FC = () => {
         return;
       }
 
-      const responseCart = await axios.get('https://prickly-ray-sarong.cyclic.app/cart/', {
+      const responseCart = await axios.get(`${BACKEND_URL}/cart/`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -61,7 +63,7 @@ const CartComponent: React.FC = () => {
         return;
       }
 
-      await axios.delete('https://prickly-ray-sarong.cyclic.app/cart/', {
+      await axios.delete(`${BACKEND_URL}/cart/`, {
         data: { productId }, // Pass the productId in the request body
         headers: {
           Authorization: `Bearer ${access_token}`,
@@ -87,7 +89,7 @@ const CartComponent: React.FC = () => {
       const userId: string = decodedToken.sub; // Extract the user ID from the decoded token
       console.log(decodedToken)
   
-      await axios.delete(`https://prickly-ray-sarong.cyclic.app/cart/${userId}`, {
+      await axios.delete(`${BACKEND_URL}/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

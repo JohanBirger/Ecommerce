@@ -1,6 +1,7 @@
 import Modal from 'react-modal';
 import RegisterForm from './RegisterForm';
 
+
 interface RegisterModalProps {
   isOpen: boolean;
   onRequestClose: () => void;

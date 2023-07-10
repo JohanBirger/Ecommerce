@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios, { AxiosError } from 'axios';
+import { BACKEND_URL } from '../config.js';
 
 
 
@@ -17,7 +18,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({closeRegister}) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('https://prickly-ray-sarong.cyclic.app/auth/register', {
+      const response = await axios.post(`${BACKEND_URL}/auth/register`, {
         username: username,
         email: email,
         password: password,

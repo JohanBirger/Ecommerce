@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../styles/products.css'
+import { BACKEND_URL } from '../../config.js';
 
 interface Product {
   _id: string;
@@ -48,7 +49,7 @@ const AddProduct: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://prickly-ray-sarong.cyclic.app/store/products/');
+      const response = await axios.get(`${BACKEND_URL}/store/products/`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -76,7 +77,7 @@ const AddProduct: React.FC = () => {
       }
 
       await axios.post(
-        'https://prickly-ray-sarong.cyclic.app/store/products/',
+        `${BACKEND_URL}/store/products/`,
         productData,
         {
           headers: {
@@ -103,7 +104,7 @@ const AddProduct: React.FC = () => {
       }
 
       await axios.delete(
-        `https://prickly-ray-sarong.cyclic.app/store/products/${productId}`,
+        `${BACKEND_URL}/store/products/${productId}`,
         {
           headers: {
             Authorization: `Bearer ${access_token}`,

@@ -2,6 +2,7 @@ import React, { useState, FormEvent } from 'react';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import RegisterModal from './RegisterModal';
+import { BACKEND_URL } from '../config.js';
 
 interface LoginResponse {
   access_token: string;
@@ -35,7 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://prickly-ray-sarong.cyclic.app/auth/login', {
+      const response = await axios.post(`${BACKEND_URL}/auth/login`, {
         email: email,
         password: password,
       });

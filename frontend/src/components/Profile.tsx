@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import { BACKEND_URL } from '../config.js';
 
 enum UserRole {
   Admin = 'Admin',
@@ -27,7 +28,7 @@ const Profile: React.FC = () => {
         return;
       }
 
-      const response = await axios.get('https://prickly-ray-sarong.cyclic.app/auth/user', {
+      const response = await axios.get(`${BACKEND_URL}/auth/user`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

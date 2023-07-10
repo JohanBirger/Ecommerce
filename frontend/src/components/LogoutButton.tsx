@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { BACKEND_URL } from '../config.js';
 
 interface LogoutButtonProps {
   onLogout: () => void;
@@ -12,7 +13,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout,style }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('https://prickly-ray-sarong.cyclic.app/auth/logout');
+      await axios.post(`${BACKEND_URL}/auth/logout`);
       localStorage.removeItem('access_token');
       onLogout(); // Call the callback function passed as prop
       navigate('/', { replace: true });

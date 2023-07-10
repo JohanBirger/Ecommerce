@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/products.css';
 import {ic_done} from 'react-icons-kit/md/ic_done'
-import {Icon} from 'react-icons-kit'
+import {Icon} from 'react-icons-kit';
+import { BACKEND_URL } from '../config.js';
 
 interface Product {
   _id: string;
@@ -70,7 +71,7 @@ const Products: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('https://prickly-ray-sarong.cyclic.app/store/products/');
+      const response = await axios.get(`${BACKEND_URL}/store/products/`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -86,7 +87,7 @@ const Products: React.FC = () => {
         return;
       }
   
-      const response = await axios.get(`https://prickly-ray-sarong.cyclic.app/store/products/${productId}`, {
+      const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -103,7 +104,7 @@ const Products: React.FC = () => {
       };
   
       await axios.post(
-        'https://prickly-ray-sarong.cyclic.app/cart/',
+        `${BACKEND_URL}/cart/`,
         itemDTO,
         {
           headers: {
