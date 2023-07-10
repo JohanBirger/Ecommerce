@@ -35,7 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/login', {
+      const response = await axios.post('https://prickly-ray-sarong.cyclic.app/auth/login', {
         email: email,
         password: password,
       });

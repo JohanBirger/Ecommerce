@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8000/auth/user', {
+      const response = await axios.get('https://prickly-ray-sarong.cyclic.app/auth/user', {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

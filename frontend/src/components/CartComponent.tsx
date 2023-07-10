@@ -34,7 +34,7 @@ const CartComponent: React.FC = () => {
         return;
       }
 
-      const responseCart = await axios.get('http://localhost:8000/cart/', {
+      const responseCart = await axios.get('https://prickly-ray-sarong.cyclic.app/cart/', {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -61,7 +61,7 @@ const CartComponent: React.FC = () => {
         return;
       }
 
-      await axios.delete('http://localhost:8000/cart/', {
+      await axios.delete('https://prickly-ray-sarong.cyclic.app/cart/', {
         data: { productId }, // Pass the productId in the request body
         headers: {
           Authorization: `Bearer ${access_token}`,

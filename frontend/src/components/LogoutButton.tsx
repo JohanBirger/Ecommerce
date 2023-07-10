@@ -12,7 +12,7 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ onLogout,style }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://localhost:8000/auth/logout');
+      await axios.post('https://prickly-ray-sarong.cyclic.app/auth/logout');
       localStorage.removeItem('access_token');
       onLogout(); // Call the callback function passed as prop
       navigate('/', { replace: true });

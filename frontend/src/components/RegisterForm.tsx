@@ -17,7 +17,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({closeRegister}) => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/register', {
+      const response = await axios.post('https://prickly-ray-sarong.cyclic.app/auth/register', {
         username: username,
         email: email,
         password: password,

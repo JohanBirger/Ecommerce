@@ -70,7 +70,7 @@ const Products: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/store/products/');
+      const response = await axios.get('https://prickly-ray-sarong.cyclic.app/store/products/');
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -86,7 +86,7 @@ const Products: React.FC = () => {
         return;
       }
   
-      const response = await axios.get(`http://localhost:8000/store/products/${productId}`, {
+      const response = await axios.get(`https://prickly-ray-sarong.cyclic.app/store/products/${productId}`, {
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
