@@ -1,68 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import '../index.css';
 import logo from '../watermelon.png';
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import LogoutButton from './LogoutButton';
-import IconCart from '../icons/shoppingcart'
-import IconUser from '../icons/userIcon';
-import Modal from 'react-modal';
+import LogoutButton from './subcomponents/LogoutButton';
+import IconCart from './subcomponents/shoppingcart'
+import IconUser from './subcomponents/userIcon';
 import LoginModal from '../components/LoginModal';
-import { IoClose } from 'react-icons/io5';
-
+import { openLoginModal } from '../services/ModalService'
+import { rolesStateObservable, fetchRoles, Role } from '../services/RolesService'
 
 
 const NavLanding = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [roles, setRoles] = useState<Role[]>([]);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
-  
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-  
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/';
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
-  enum Role {
-    User = 'user',
-    Admin = 'admin',
-  }
-
-  const fetchRoles = async () => {
-    try {
-      const access_token = localStorage.getItem('access_token');
-      if (!access_token) {
-        console.log('Access token not found');
-        return;
-      }
-
-      const decodedToken: { roles: Role[] } = jwt_decode(access_token);
-      const userRoles = decodedToken.roles;
-      setRoles(userRoles);
-    } catch (error) {
-      console.error('Error fetching roles:', error);
-    }
-  };
-
-  const handleLogout = () => {
-    setRoles([]); // Update the roles state when logging out
-    setIsModalOpen(false); // Close the modal when logging out - bug?
-  };
-
   useEffect(() => {
+    const rolesSubscription = rolesStateObservable.subscribe((userRoles) => {
+      setRoles(userRoles);
+    });
     fetchRoles();
+    return () => {
+      rolesSubscription.unsubscribe();
+    };
   }, [location]);
 
   useEffect(() => {
@@ -78,13 +44,10 @@ const NavLanding = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [scrolled]);
-
-
-  
+  }, [scrolled]);  
 
   return (
-    <nav className={`moralis-blue ${scrolled ? 'scrolled-nav' : ''}`} style={{ position: 'sticky', top: '0', zIndex: '100' }}>
+    <nav className={` ${isLandingPage ? 'transparent nav-fixed' : 'moralis-blue nav-sticky' } ${scrolled ? 'scrolled-nav' : ''}`}>
       <div className="flex items-center justify-between px-4 py-2">
         <Link to="/" className="flex items-center" >
           <img src={logo} alt="logo" className="h-8 px-2" />
@@ -101,7 +64,7 @@ const NavLanding = () => {
 
         
         <button
-          className="block sm:hidden text-white hover:text-gray-300 focus:outline-none"
+          className={` ${scrolled ? 'text-black' : "text-white "} block sm:hidden hover:text-gray-300 focus:outline-none`}
           onClick={toggleMenu}
         >
           <svg
@@ -154,20 +117,20 @@ const NavLanding = () => {
                 </Link>
               </li>
               <li>
-                <LogoutButton onLogout={handleLogout} style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3  rounded`}/>
+                <LogoutButton style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3  rounded`}/>
               </li>
             </>
           ) : (
             <>
               <li>
                 <button
-                  onClick={openModal}>
+                  onClick={openLoginModal}>
                   <IconUser 
                     text="Login" 
                     styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
                     styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
                 </button>
-                <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
+                <LoginModal/>
               </li>
             </>
           )}
@@ -197,7 +160,7 @@ const NavLanding = () => {
                 </Link>
               </li>
               <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
-                <LogoutButton onLogout={handleLogout} style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 md:px-3  rounded`}/>
+                <LogoutButton style={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 md:px-3  rounded`}/>
               </li>
        
         </>
@@ -223,13 +186,13 @@ const NavLanding = () => {
         
         <ul className="sm:hidden top-navbar w-full lg:inline-flex lg:flex-grow lg:w-auto">
     <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>
-      <button onClick={openModal}>
+      <button onClick={openLoginModal}>
         <IconUser
           text="Login"
           styleText={` ${scrolled ? 'text-black' : 'text-white'}  px-2 py-1 rounded`}
           styleIcon={` ${scrolled ? 'text-black' : 'text-white'}  px-2 py-1 rounded`}
         />
-        <LoginModal isOpen={isModalOpen} onRequestClose={closeModal} />
+        <LoginModal />
       </button>
     </li>
   </ul>

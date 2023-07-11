@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+
 body {
   margin: 0;
   color: black;
@@ -44,13 +45,25 @@ span {
 
 }
 
-.btn-wide-contrast{
+.btn-wide-contrast, .btn-big-wide-contrast{
   background-color: #00AD96;
   color: #ffffff;
   border-color: #00AD96;
 }
 
+.btn-big-wide-contrast{
+  padding-top: 1.2rem;
+  padding-bottom: 1.2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-radius: 10pt;
+  font-size: large;
+}
+
 .btn-wide-contrast:hover{
+  box-shadow: 0px 0px 8px #16ECB3, inset 0px 0px 8px #FFFFFF !important;
+}
+.btn-big-wide-contrast:hover{
   box-shadow: 0px 0px 8px #16ECB3, inset 0px 0px 8px #FFFFFF !important;
 }
 
@@ -76,11 +89,44 @@ span {
 
 
 .moralis-blue{
-  background-color: #041836;
+  background-color: #030212;
 }
 
 
 .scrolled-nav {
-  background-color: white;
+  background-color: white !important;
 }
 
+.transparent{
+  background-color: transparent;
+}
+
+
+.nav-fixed {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.nav-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+
+.space-color{
+  background-color: #030212 ;
+}
+
+/* Add this to your CSS file */
+.input-number::-webkit-inner-spin-button,
+.input-number::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input-number {
+  -moz-appearance: textfield;
+}

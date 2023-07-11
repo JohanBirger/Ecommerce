@@ -1,36 +1,19 @@
 import React, { useState, FormEvent } from 'react';
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import RegisterModal from './RegisterModal';
 import { BACKEND_URL } from '../config.js';
+import { openRegisterModal } from '../services/ModalService'
+import { closeLoginModal } from '../services/ModalService'
 
-interface LoginResponse {
-  access_token: string;
-}
 
-interface ErrorResponse {
-  message: string;
-}
 
-interface LoginFormProps{
-  onRequestClose: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
+const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const location = useLocation();
   const [status,setStatus] = useState('');
-  const [registerModal, setRegisterModal] = useState(false);
-
-  const openRegisterModal = () => {
-    setRegisterModal(true);
-  };
-
-  const closeRegisterModal = () => {
-    setRegisterModal(false);
-  };
+  
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -46,8 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
       await localStorage.setItem('access_token', access_token);
       setStatus('Success');
       // Redirect to the desired page or perform other actions
-      closeRegisterModal();
-      onRequestClose();
+      closeLoginModal();
 
       navigate('/',{ replace: true });
       
@@ -59,8 +41,6 @@ const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
   };
 
   return (
-    
-    
     <div className="max-w-xs mx-auto">
       <h2 className="text-2xl font-bold mb-2 md:mb-4 text-black">Login</h2>
       <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4">
@@ -87,12 +67,13 @@ const LoginForm: React.FC<LoginFormProps> = ({onRequestClose}) => {
           <button type="submit" className="btn-wide-action">Login</button>
         </div>
         
-        <RegisterModal isOpen={registerModal} onRequestClose={closeRegisterModal} />
+        <RegisterModal/>
       
       </form>
       <div className="flex justify-center items-center">
         <button onClick={openRegisterModal} className="btn-wide mt-2">Create Account</button>
       </div>
+      <div><button onClick={closeLoginModal} > <Link to="/resetpassword"> Forgot Password</Link> </button></div>
     </div>
   );
 };

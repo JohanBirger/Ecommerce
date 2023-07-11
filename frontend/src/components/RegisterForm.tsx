@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { BACKEND_URL } from '../config.js';
+import { closeRegisterModal } from '../services/ModalService'
 
 
 
-interface RegisterFormProps {
-  closeRegister: () => void;
-}
 
-const RegisterForm: React.FC<RegisterFormProps> = ({closeRegister}) => {
+
+const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [status, setStatus] = useState<string>('');
+
 
   const handleRegister = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -75,7 +75,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({closeRegister}) => {
         </div>
         <div className='flex justify-center items-center'>
           <button
-            onClick={closeRegister}
+            onClick={closeRegisterModal}
             className="btn-wide my-3"
             >
             Login

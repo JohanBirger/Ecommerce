@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 import { BACKEND_URL } from '../config.js';
 
 enum UserRole {

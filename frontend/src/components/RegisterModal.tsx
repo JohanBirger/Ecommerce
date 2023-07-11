@@ -1,21 +1,29 @@
 import Modal from 'react-modal';
 import RegisterForm from './RegisterForm';
+import {useState,useEffect} from 'react';
+import { registerModalStateObservable, closeRegisterModal } from '../services/ModalService'
 
 
-interface RegisterModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
 
-const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onRequestClose }) => {
-  const closeRegister = () => {
-    onRequestClose(); // Call the onRequestClose function provided as a prop
-  };
+
+const RegisterModal: React.FC= () => {
+  const [isRegisterModalOpen,setIsRegisterModalOpen] = useState(false);
+
+  useEffect(() => {
+    
+    const registerSubscription = registerModalStateObservable.subscribe((isOpen) => {
+      setIsRegisterModalOpen(isOpen);
+    });
+  
+    return () => {
+      registerSubscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      isOpen={isRegisterModalOpen}
+      onRequestClose={closeRegisterModal}
       contentLabel="Register Modal"
       style={{
         overlay: {
@@ -35,7 +43,7 @@ const RegisterModal: React.FC<RegisterModalProps> = ({ isOpen, onRequestClose })
         },
       }}
     >
-      <RegisterForm closeRegister={closeRegister} /> {/* Pass the closeRegister prop */}
+      <RegisterForm /> 
     </Modal>
   );
 };
