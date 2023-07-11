@@ -9,6 +9,7 @@ import AdminPage from './pages/Adminpage';
 import Footer from './components/Footer';
 
 
+
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
       <Route path="/profile" element={<MyAccount />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/resetpassword" element={<NotFound />} />
       </Routes>
       <Footer/>
     </Router>

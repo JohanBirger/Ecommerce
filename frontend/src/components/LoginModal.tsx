@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
 import LoginForm from './LoginForm';
+import { loginModalStateObservable, closeLoginModal } from '../services/ModalService'
 
 
-interface LoginModalProps {
-  isOpen: boolean;
-  onRequestClose: () => void;
-}
 
-const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
+const LoginModal: React.FC = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+ 
+  useEffect(() => {
+    const registerSubscription = loginModalStateObservable.subscribe((isOpen) => {
+      setIsLoginModalOpen(isOpen);
+    });
   
+    return () => {
+      registerSubscription.unsubscribe();
+    };
+  }, []);
 
   return (
     <Modal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
+        isOpen={isLoginModalOpen}
+        onRequestClose={closeLoginModal}
         contentLabel="Login Modal"
         style={{
         overlay: {
@@ -34,7 +41,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onRequestClose }) => {
         },
         }}
     >
-        <LoginForm onRequestClose={onRequestClose} />
+        <LoginForm/>
     </Modal>   
   );
 };

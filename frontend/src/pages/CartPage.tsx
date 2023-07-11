@@ -1,9 +1,9 @@
 // frontend/src/pages/CartPage.tsx
 import React from 'react';
-import CartComponent from '../components/CartComponent';
+import CartComponent from '../components/Cart';
 
 
-const LoginPage: React.FC = () => {
+const CartPage: React.FC = () => {
   return (
     <div className='min-h-screen'>
       <CartComponent/>
@@ -11,4 +11,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default CartPage;
