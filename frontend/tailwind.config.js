@@ -17,7 +17,11 @@ module.exports = {
     },
   },
   },
-  variants: {},
+  variants: {
+    extend: {
+      transform: ['hover', 'focus'],
+    },
+  },
   plugins: [],
   corePlugins: {
     fontFamily: false, // Disable the default fontFamily utility
