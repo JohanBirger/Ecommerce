@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import '../index.css';
-import logo from '../watermelon.png';
+import logo from '../watermelon.webp';
 import LogoutButton from './subcomponents/LogoutButton';
 import IconCart from './subcomponents/shoppingcart'
 import IconUser from './subcomponents/userIcon';
@@ -113,7 +113,10 @@ const NavLanding = () => {
                   to="/profile"
                   className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-2 py-1 rounded`}
                 >
-                  My Account
+                  <IconUser 
+                    text="My Account" 
+                    styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
+                    styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
                 </Link>
               </li>
               <li>
@@ -156,7 +159,10 @@ const NavLanding = () => {
                   to="/profile"
                   className={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300  px-3 md:px-2 py-1 rounded`}
                 >
-                  My Account
+                  <IconUser 
+                    text="My Account" 
+                    styleText={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 px-3 rounded`} 
+                    styleIcon={` ${scrolled ? 'text-black' : "text-white "} hover:text-gray-300 rounded h-7`}/>
                 </Link>
               </li>
               <li className='lg:inline-flex lg:flex-row lg:ml-auto lg:w-auto w-full lg:items-center items-end  flex flex-col lg:h-auto'>

@@ -20,7 +20,7 @@ span {
 
 .btn-wide,.btn-wide-action,.btn-wide-contrast,.btn-small,.btn-small-action {
   width: 100%;
-  border: 1px solid #041836;
+  border: 1px solid #030212;
   background-color: transparent;
   color: #041836;
   padding: 0.5rem 1rem;
@@ -28,19 +28,19 @@ span {
 }
 
 .btn-wide:hover {
-  background-color: #041836;
+  background-color:#030212;
   color: #fff;
 
 }
 
 .btn-wide-action{
-  background-color: #041836;
+  background-color: #030212;
   color: #fff;
 
 }
 
 .btn-wide-action:hover{
-  background-color: #051c3f;
+  background-color: #14131b;
     color: #fff;
 
 }
@@ -73,17 +73,17 @@ span {
 
 .btn-small-action{
   width: 10rem;
-  background-color: #041836;
+  background-color: #030212;
   color: #fff;
 }
 
 .btn-small:hover{
-  background-color: #041836;
+  background-color: #030212;
   color: #fff;
 }
 
 .btn-small-action:hover{
-  background-color: #051c3f;
+  background-color: #14131b;
   color: #fff;
 }
 
