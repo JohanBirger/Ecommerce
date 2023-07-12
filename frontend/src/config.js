@@ -1,1 +1,1 @@
-export const BACKEND_URL = 'http://localhost:3000';  //BACKEND_URL = "https://prickly-ray-sarong.cyclic.app";
+export const BACKEND_URL = "https://prickly-ray-sarong.cyclic.app";
