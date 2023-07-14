@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import '../index.css'
 
 const Footer = () => {
@@ -9,7 +10,7 @@ const Footer = () => {
           <div>
             <ul className="flex space-x-4 text-white text-sm">
               <li>
-                <a href="#" className="hover:text-gray-300">Privacy Policy</a>
+                <Link to="/security" className="hover:text-gray-300">Privacy Policy</Link>
               </li>
               <li>
                 <a href="#" className="hover:text-gray-300">Terms</a>
@@ -18,7 +19,7 @@ const Footer = () => {
                 <a href="#" className="hover:text-gray-300">Cookie Policy</a>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300">Security Policy</a>
+                <Link to="/security" className="hover:text-gray-300">Security Policy</Link>
               </li>
             </ul>
           </div>

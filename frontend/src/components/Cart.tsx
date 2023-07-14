@@ -31,7 +31,7 @@ const CartComponent: React.FC = () => {
       console.log('Updating state with new cart data:', cartData);
       setCart(cartData);
     });
-    fetchCart();
+    
   
     return () => {
       cartSubscription.unsubscribe();
@@ -82,9 +82,7 @@ const CartComponent: React.FC = () => {
                 </tbody>
                 
               </table>
-              <button onClick={deleteCart} className="btn-small mx-auto">
-                  Empty Cart
-                </button>
+              
               
             </div>
             <div className="md:flex md:justify-end">
