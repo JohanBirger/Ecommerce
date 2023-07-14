@@ -73,7 +73,7 @@ const LoginForm: React.FC = () => {
       <div className="flex justify-center items-center">
         <button onClick={openRegisterModal} className="btn-wide mt-2">Create Account</button>
       </div>
-      <div><button onClick={closeLoginModal} > <Link to="/resetpassword"> Forgot Password</Link> </button></div>
+      <div><button onClick={closeLoginModal} > <Link to="/requestresetpassword"> Forgot Password</Link> </button></div>
     </div>
   );
 };

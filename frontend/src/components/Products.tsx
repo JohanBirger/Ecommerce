@@ -10,6 +10,7 @@ import { ic_search } from 'react-icons-kit/md/ic_search'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css'
 import logo from '../webp.webp';
+import { debounce } from 'lodash'; // Import the debounce function from lodash or use a custom debounce implementation
 
 
 interface Product {
@@ -33,19 +34,21 @@ const ProductCard: React.FC<Product & { onAddToCart: (quantity: number) => void 
   const handleAddToCart = () => {
     onAddToCart(quantity);
     setShowModal(true);
-    fetchCart();
+    //fetchCart();
 
     setTimeout(() => {
       setShowModal(false);
     }, 350);
   };
 
+  
+
   const handleQuantityChange = (value: number) => {
     setQuantity(value);
   };
 
   return (
-    <div className="w-full mx-auto bg-white rounded-md border border-black-200 p-5 flex flex-col justify-between m-5">
+    <div className="max-w-sm bg-white rounded-md border border-black p-5 flex flex-col justify-between m-5">
       <div>
         <h3 className="text-lg font-200 text-black ">{name}</h3>
         <p className="text-gray-600 ">${price}</p>
@@ -109,16 +112,19 @@ const Products: React.FC<ProductProps> = ({ categoryQuery }) => {
     search?: string;
     category?: string;
   }
-
-  useEffect(() => {
-    if(categoryQuery){
-      handleFetchProducts();
-      fetchCart();
-    }
-    else{fetchData();}
+  const handleFetchProducts = async () => {
+    const data = await getProducts({category: categoryQuery});  // use categoryQuery instead of "poppis"
+    setProducts(data);
+    //fetchCart();
     
-  }, [categoryQuery]);
+  }
 
+  const searchProduct = async (value: string) => {
+    const data = await getProducts({search: value});  // use categoryQuery instead of "poppis"
+    setProducts(data);
+    //fetchCart();
+    
+  }
 
   const fetchData = async () => {
     try {
@@ -129,54 +135,17 @@ const Products: React.FC<ProductProps> = ({ categoryQuery }) => {
     }
   };
 
-  const addToCart = async (productId: string, quantity: number) => {
-    try {
-      const access_token = localStorage.getItem('access_token');
-
-      if (!access_token) {
-        console.error('Access token not found');
-        return;
-      }
-
-      const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      const product = response.data;
-
-      const itemDTO: ItemDTO = {
-        productId: product._id,
-        name: product.name,
-        quantity,
-        price: product.price,
-        description: product.description,
-      };
-
-      await axios.post(`${BACKEND_URL}/cart/`, itemDTO, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-      fetchCart();
-      console.log('Item added to cart');
-    } catch (error) {
-      console.error('Error adding item to cart:', error);
-    }
-  };
-
   const getProducts = async (filter:Filter): Promise<Product[]> => {
     try {
       // Prepare URL
-      let url = `${BACKEND_URL}/store/products`; 
+
   
       // Create filter object
       if (search) filter['search'] = search;
       if (category) filter['category'] = category;
   
-      const response: AxiosResponse<Product[]> = await axios.get(url, { params: filter });
-      fetchCart();
+      const response: AxiosResponse<Product[]> = await axios.get(`${BACKEND_URL}/store/products`, { params: filter });
+      //fetchCart();
       return response.data;
     } catch (error) {
       console.error(`Failed to fetch products: ${error}`);
@@ -184,48 +153,105 @@ const Products: React.FC<ProductProps> = ({ categoryQuery }) => {
     }
   }
 
-  const handleFetchProducts = async () => {
-    const data = await getProducts({category: categoryQuery});  // use categoryQuery instead of "poppis"
-    setProducts(data);
-    fetchCart();
-    
-  }
+  useEffect(() => {
+    if(categoryQuery){
+      handleFetchProducts();
+      //fetchCart();
+    }
+    else{fetchData();}
 
-  const searchProduct = async (value: string) => {
-    const data = await getProducts({search: value});  // use categoryQuery instead of "poppis"
-    setProducts(data);
-    fetchCart();
-    
-  }
+  }, [categoryQuery]);
+
+  const debouncedSearchProduct = debounce((value: string) => {
+    searchProduct(value);
+  }, 300); // Debounce for 300 milliseconds
+
+
+  
+
+  const addToCart = async (productId: string, quantity: number) => {
+    try {
+      const access_token = localStorage.getItem('access_token');
+
+      if (access_token) {
+        console.log('adding to user cart')
+        const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+
+        const product = response.data;
+        console.log(product)
+        const itemDTO: ItemDTO = {
+          productId: product._id,
+          name: product.name,
+          quantity,
+          price: product.price,
+          description: product.description,
+        };
+
+        console.log(itemDTO)
+        try{
+          await axios.post(`${BACKEND_URL}/cart/`, itemDTO, {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          });
+        } catch (error){
+          console.error(error)
+        }
+        
+        fetchCart();
+        console.log('Item added to cart');
+      }
+      else{
+        const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`,{ withCredentials: true });
+        const product = response.data;
+
+        const itemDTO: ItemDTO = {
+          productId: product._id,
+          name: product.name,
+          quantity,
+          price: product.price,
+          description: product.description,
+        };
+      
+        await axios.post(`${BACKEND_URL}/cart/`, itemDTO, { withCredentials: true });
+        fetchCart();
+        console.log('Item added to cart');
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+  
 
 
   return (
     
     <div className="w-full bg-white mx-auto flex flex-col items-center" id="products">
      {categoryQuery !== "poppis" && <div className='flex items-center justify-center p-4'>
-        <div className="relative pt-3">
+        <div className="relative pt-3 ">
           <input 
             id="search"
             className="border border-gray-300 text-md p-2 h-12 rounded-md focus:outline-none focus:ring-none focus:ring-none w-64 pl-10" 
             type="text" 
             placeholder="Search for a product" 
-            onChange={(event) => searchProduct(event.target.value)}
-            onKeyUp={(event) => {
-              if (event.key === 'Enter') {
-                event.preventDefault();
-              }
-              searchProduct(event.currentTarget.value);
-            }}
-            
-            
+            onChange={(event) => debouncedSearchProduct(event.target.value)}
           />
           <div className="absolute top-0 pt-4 left-0 mt-2 ml-2">
             <Icon icon={ic_search} size={24} style={{ color: '#030212' }} />
           </div>
         </div>
       </div>}
-      
+      <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {products.length < 1 &&
+          <div className='flex justify-center items-center'>
+             <div className='p-10 '>No products</div>
+           </div>
+           }
         {products.map((product) => (
           <ProductCard
             key={product._id}
@@ -234,7 +260,9 @@ const Products: React.FC<ProductProps> = ({ categoryQuery }) => {
           />
         ))}
       </div>
+      </div>
     </div>
+    
   );
 };
 

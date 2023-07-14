@@ -19,48 +19,59 @@ interface Product {
 // Create a BehaviorSubject for the modal state
 const cartState$ = new BehaviorSubject<Cart | null>(null);
 
+
+
 export const fetchCart = async () => {
     console.log('fetchCart called');
     try {
       const access_token = localStorage.getItem('access_token');
+
       if (!access_token) {
         console.error('Access token not found');
-        return;
+        const responseCart = await axios.get(`${BACKEND_URL}/cart/`,{ withCredentials: true });
+        const cartData = responseCart.data;
+        cartState$.next(cartData);
+        if (!cartData){
+          return console.log('Cart Empty');
+        }
+      }else{
+        const responseCart = await axios.get(`${BACKEND_URL}/cart/`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+        const cartData = responseCart.data;
+        cartState$.next(cartData);
+        if (!cartData){
+          return console.log('Cart Empty');
+        }
       }
 
-      const responseCart = await axios.get(`${BACKEND_URL}/cart/`, {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-
-      const cartData = responseCart.data;
-      console.log(cartData)
-      cartState$.next(cartData);
-      if (!cartData){
-        return console.log('Cart Empty');
-      }
-
-      
     } catch (error) {
       console.error('Error fetching cart:', error);
     }
   };
+
+
 
   export const removeItemFromCart = async (productId: string) => {
     try {
       const access_token = localStorage.getItem('access_token');
       if (!access_token) {
         console.log('Access token not found');
-        return;
+        
+        await axios.delete(`${BACKEND_URL}/cart/`, {
+          data: { productId }, // Pass the productId in the request body
+          withCredentials: true,
+        });
+      } else{
+        await axios.delete(`${BACKEND_URL}/cart/`, {
+          data: { productId }, // Pass the productId in the request body
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
       }
-
-      await axios.delete(`${BACKEND_URL}/cart/`, {
-        data: { productId }, // Pass the productId in the request body
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
 
       fetchCart();
       console.log("Item removed");
@@ -69,15 +80,22 @@ export const fetchCart = async () => {
     }
   };
 
+
+
   export const handleQuantityChange = (productId: string, quantity:number) => {
     updateItemQuantityCart(productId,quantity);
   };
+
+
 
   const updateItemQuantityCart = async (productId: string, quantity:number) =>{
     try{
       const access_token = localStorage.getItem('access_token');
       if (!access_token) {
-        throw new Error("Access-token not found. Login again.")
+        await axios.put(`${BACKEND_URL}/cart/`, { productId, quantity }, {
+          withCredentials: true,
+
+        });
       }
       
       await axios.put(`${BACKEND_URL}/cart/`, { productId, quantity }, {
@@ -121,3 +139,5 @@ export const fetchCart = async () => {
 
 
 export const cartStateObservable = cartState$.asObservable();
+
+

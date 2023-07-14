@@ -7,10 +7,13 @@ import CartPage from './pages/CartPage';
 import MyAccount from './pages/MyAccount';
 import AdminPage from './pages/Adminpage';
 import Footer from './components/Footer';
-
-
+import SecurityPage from './pages/SecurityPage'
+import RequestResetPasswordPage from './pages/RequestResetPasswordPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import {initVisitor } from './services/VisitorServices';
 
 function App() {
+  initVisitor();
   return (
     <Router>
       <NavLanding/>
@@ -20,7 +23,9 @@ function App() {
       <Route path="/profile" element={<MyAccount />} />
       <Route path="/admin" element={<AdminPage />} />
       <Route path="*" element={<NotFound />} />
-      <Route path="/resetpassword" element={<NotFound />} />
+      <Route path="/requestresetpassword" element={<RequestResetPasswordPage />} />
+      <Route path="/resetpassword/*" element={<ResetPasswordPage />} />
+      <Route path="/security" element={<SecurityPage />} />
       </Routes>
       <Footer/>
     </Router>
