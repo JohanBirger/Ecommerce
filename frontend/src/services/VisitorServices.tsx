@@ -22,7 +22,8 @@ export const initVisitor = async () => {
 };
 
 export const getVisitorToken = async () =>{
-  return visitorState$.getValue();
+  const token = visitorState$.getValue();
+  return token;
 }
 
 
