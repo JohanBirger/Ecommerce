@@ -10,8 +10,9 @@ export const initVisitor = async () => {
   try{
     const response = await axios.get(`${BACKEND_URL}/crypto/`);
     const token = response.data;
+    console.log(token)
     localStorage.setItem('visitor_token',token);
-    Cookies.set('visitor_token', token, { secure: true, sameSite: 'None', maxAge: 1 * 60 * 60 * 1000});
+    Cookies.set('visitor_token', token, { secure: true, sameSite: 'None', expires: 1 * 60 * 60 * 1000});
     visitorState$.next(token);
   
   } catch (error){
