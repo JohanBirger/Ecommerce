@@ -95,7 +95,7 @@ const CartComponent: React.FC = () => {
       <div className="flex flex-flow justify-center items-center p-10">
         <p className='text-lg'>View some of our most popular products</p>
       </div>
-        <ProductContainer categoryQuery='poppis'/>
+        <ProductContainer categoryQuery='poppis-nft'/>
      </div>
       </>
     ) : (
@@ -103,7 +103,7 @@ const CartComponent: React.FC = () => {
       <div className="flex flex-flow justify-center items-center p-10">
         <p className='text-lg'>View some of our most popular products</p>
       </div>
-        <ProductContainer categoryQuery='poppis'/>
+        <ProductContainer categoryQuery='poppis-nft'/>
       <div className="flex flex-flow justify-center items-center p-10">
         <p className='text-lg'>View some of our other <Link className='text-blue-500 hover:underline' to='/#products'> products</Link></p>
       </div>

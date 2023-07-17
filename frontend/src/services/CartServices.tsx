@@ -2,15 +2,8 @@ import { BehaviorSubject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
 import { BACKEND_URL } from '../config.js';
-
-
-
-interface Product {
-    name: string;
-    price: number;
-    quantity:number;
-    productId: string
-  }
+import {Product} from './Product/ProductInterface'
+import { ItemDTO } from './Product/ItemDTO.js';
   
   interface Cart {
     items: Product[];
@@ -18,7 +11,6 @@ interface Product {
   }
 // Create a BehaviorSubject for the modal state
 const cartState$ = new BehaviorSubject<Cart | null>(null);
-
 
 
 export const fetchCart = async () => {
@@ -52,7 +44,63 @@ export const fetchCart = async () => {
     }
   };
 
+  export const addToCart = async (productId: string, quantity: number) => {
+    try {
+      const access_token = localStorage.getItem('access_token');
 
+      if (access_token) {
+        console.log('adding to user cart')
+        const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+
+        const product = response.data;
+        console.log(product)
+        const itemDTO: ItemDTO = {
+          productId: product._id,
+          name: product.name,
+          quantity,
+          price: product.price,
+          description: product.description,
+        };
+
+        console.log(itemDTO)
+        try{
+          await axios.post(`${BACKEND_URL}/cart/`, itemDTO, {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          });
+        } catch (error){
+          console.error(error)
+        }
+        
+        fetchCart();
+        console.log('Item added to cart');
+      }
+      else{
+        const response = await axios.get(`${BACKEND_URL}/store/products/${productId}`,{ withCredentials: true });
+        const product = response.data;
+
+        const itemDTO: ItemDTO = {
+          productId: product._id,
+          name: product.name,
+          quantity,
+          price: product.price,
+          description: product.description,
+        };
+      
+        await axios.post(`${BACKEND_URL}/cart/`, itemDTO, { withCredentials: true });
+        fetchCart();
+        console.log('Item added to cart');
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+  
 
   export const removeItemFromCart = async (productId: string) => {
     try {

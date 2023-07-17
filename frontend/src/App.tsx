@@ -11,6 +11,8 @@ import SecurityPage from './pages/SecurityPage'
 import RequestResetPasswordPage from './pages/RequestResetPasswordPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import {initVisitor } from './services/VisitorServices';
+import ImagePage from './pages/ImagePage';
+import OneProductPage from './pages/OneProductPage';
 
 function App() {
   initVisitor();
@@ -25,7 +27,9 @@ function App() {
       <Route path="*" element={<NotFound />} />
       <Route path="/requestresetpassword" element={<RequestResetPasswordPage />} />
       <Route path="/resetpassword/*" element={<ResetPasswordPage />} />
+      <Route path="/products/*" element={<OneProductPage/>}/>
       <Route path="/security" element={<SecurityPage />} />
+      <Route path="/images" element={<ImagePage />} />
       </Routes>
       <Footer/>
     </Router>

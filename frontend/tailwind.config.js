@@ -22,7 +22,9 @@ module.exports = {
       transform: ['hover', 'focus'],
     },
   },
-  plugins: [],
+  plugins: [
+   
+  ],
   corePlugins: {
     fontFamily: false, // Disable the default fontFamily utility
   },
