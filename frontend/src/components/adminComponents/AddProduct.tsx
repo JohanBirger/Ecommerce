@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../styles/products.css'
 import { BACKEND_URL } from '../../config.js';
+import DisplayImages from './Images/DisplayImages';
 
 interface Product {
   _id: string;
@@ -14,6 +15,8 @@ interface CreateProductDTO {
     description: string;
     price: number;
     category: string;
+    image: string|null;
+
   }
 
 const ProductCard: React.FC<Product & { onDeleteProduct: () => void }> = ({
@@ -42,6 +45,7 @@ const AddProduct: React.FC = () => {
   const [description,setDescription] = useState('');
   const [price,setPrice] = useState<number>(0);
   const [category,setCategory] = useState('');
+  const [image, setImage] =  useState<string | null>(null);
 
   useEffect(() => {
     fetchData();
@@ -66,7 +70,10 @@ const AddProduct: React.FC = () => {
         description: description,
         price: price,
         category: category,
+        image: image,
       };
+
+      console.log(image)
 
     try {
       const access_token = localStorage.getItem('access_token');
@@ -119,6 +126,7 @@ const AddProduct: React.FC = () => {
     }
   };
 
+
   return (
     <div>
     <h1 className="text-2xl font-bold mb-4">Products</h1>
@@ -168,6 +176,15 @@ const AddProduct: React.FC = () => {
             className="border border-gray-300 px-3 py-2 rounded"
           />
         </div>
+        <div>
+        <label className="block mb-1">Image:</label>
+        <DisplayImages setSelectedImage={setImage} />
+        {image && (
+          <div>
+            Selected Image URL: <code>{image}</code>
+          </div>
+        )}
+      </div>
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
