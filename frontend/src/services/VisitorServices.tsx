@@ -13,7 +13,7 @@ export const initVisitor = async () => {
     const token = response.data;
     console.log(token)
     localStorage.setItem('visitor_token',token);
-    Cookies.set('visitor_token', token, { secure: true, sameSite: 'None', expires: 1 * 60 * 60 * 1000, domain:".vercel.app", path:'/'});
+    Cookies.set('visitor_token', token, { secure: true, sameSite: 'None', expires: 1 * 60 * 60 * 1000, domain:"ecommerce-gules-two.vercel.app", path:'/'});
     visitorState$.next(token);
   
   } catch (error){
