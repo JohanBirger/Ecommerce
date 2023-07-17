@@ -24,7 +24,7 @@ function App() {
     Cookies.set('myCookie', 'myCookieValue');
     
     // send a GET request to our backend using axios, and include cookies with the request
-    axios.get(`${process.env.BACKEND_URL}`, { withCredentials: true })
+    axios.post(`${process.env.BACKEND_URL}`, { withCredentials: true })
       .then(response => {
         console.log(response.data);
       })
