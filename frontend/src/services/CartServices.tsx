@@ -72,6 +72,7 @@ export const fetchCart = async () => {
             headers: {
               Authorization: `Bearer ${access_token}`,
             },
+            withCredentials: true,
           });
         } catch (error){
           console.error(error)
