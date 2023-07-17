@@ -21,6 +21,7 @@ export const fetchCart = async () => {
       if (!access_token) {
         console.error('Access token not found');
         const responseCart = await axios.get(`${BACKEND_URL}/cart/`,{ withCredentials: true });
+        console.log('withCredentials:', responseCart.config.withCredentials);
         const cartData = responseCart.data;
         cartState$.next(cartData);
         if (!cartData){
@@ -54,7 +55,10 @@ export const fetchCart = async () => {
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
+          withCredentials:true,
         });
+
+        
 
         const product = response.data;
         console.log(product)
