@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import NotFound from './pages/NotFound';
@@ -13,9 +13,7 @@ import ResetPasswordPage from './pages/ResetPasswordPage';
 import {initVisitor } from './services/VisitorServices';
 import ImagePage from './pages/ImagePage';
 import OneProductPage from './pages/OneProductPage';
-import Cookies from 'js-cookie';
-import axios from 'axios'
-import './config'
+
 
 
 function App() {
