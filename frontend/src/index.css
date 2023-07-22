@@ -28,6 +28,7 @@ span {
   color: #041836;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
+  font-family: 'Noto Sans Mono', monospace !important; 
 }
 
 .btn-wide:hover {
@@ -52,6 +53,7 @@ span {
   background-color: #00AD96;
   color: #ffffff;
   border-color: #00AD96;
+  font-family: 'Noto Sans Mono', monospace !important;  
 }
 
 .btn-big-wide-contrast{
@@ -140,4 +142,19 @@ span {
 
 .scrollable-row {
   overflow-y: scroll;
+}
+
+
+.btn-nav {
+  width: 100%;
+  background-color: #00AD96;
+  color: #ffffff;
+  border-color: #00AD96;
+  font-family: 'Noto Sans Mono', monospace !important; 
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+}
+
+.btn-nav:hover {  
+  box-shadow: 0px 0px 8px #16ECB3, inset 0px 0px 8px #FFFFFF !important;
 }
