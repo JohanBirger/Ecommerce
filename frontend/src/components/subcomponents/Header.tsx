@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import backgroundImage from '../landingpage.webp'
+import backgroundImage from '../../landingpage.webp'
 interface HeaderProps {
   children: ReactNode;
 }

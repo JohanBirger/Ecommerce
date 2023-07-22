@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import jwt_decode from 'jwt-decode';
-import CheckoutComponent from './Checkout';
+import CheckoutComponent from './Checkout/Checkout';
 import {cross} from 'react-icons-kit/icomoon/cross';
 import {Icon} from 'react-icons-kit';
-import { BACKEND_URL } from '../config.js';
 import CustomNumberInput from './subcomponents/CustomNumberInput';
-import { access } from 'fs';
-import {cartStateObservable, fetchCart, removeItemFromCart, handleQuantityChange, deleteCart} from '../services/CartServices'
+import {cartStateObservable, removeItemFromCart, handleQuantityChange} from '../services/Cart/CartServices'
 import {Link} from 'react-router-dom';
 import ProductContainer from './Products';
 
@@ -36,14 +32,14 @@ const CartComponent: React.FC = () => {
     return () => {
       cartSubscription.unsubscribe();
     };
-  }, []);
+  }, [cart]);
 
   return (
     <div>
         {cart ? (
           <>
-        <div className='mx-auto py-2 md:w-1/2'>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className='mx-auto py-2 lg:w-1/2'>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-20">
             <div>
               <table className="w-full">
                 <thead>
@@ -55,7 +51,7 @@ const CartComponent: React.FC = () => {
                 </thead>
                 <tbody>
                   {cart.items.map((item, index) => (
-                    <tr key={index} className="bg-gray-100">
+                    <tr key={index} className="">
                       <td className="px-3 py-3">{item.name}</td>
                       <td className="px-3 py-3">
                         <CustomNumberInput 
@@ -73,7 +69,7 @@ const CartComponent: React.FC = () => {
                         </td>
                       <td className="px-3 py-3">${item.price}</td>
                       <td className="px-3 py-3">
-                        <button onClick={() => removeItemFromCart(item.productId)}>
+                        <button onClick={ () => removeItemFromCart(item.productId)}>
                           <Icon icon = {cross}/>
                         </button>
                       </td>
@@ -86,7 +82,15 @@ const CartComponent: React.FC = () => {
               
             </div>
             <div className="md:flex md:justify-end">
-              {cart?.totalPrice && <CheckoutComponent totalPrice={cart.totalPrice} />}
+              {cart?.totalPrice && 
+              <div>
+              <h2 className="text-2xl font-bold mb-4">Checkout</h2>
+              <div className="flex items-center mb-4">
+                <span className="text-500 text-black">Total:</span>
+                <span className="text-500 text-black ml-2">${cart?.totalPrice}</span>
+              </div>
+              <CheckoutComponent/>
+              </div>}
             </div>
             <div>
               

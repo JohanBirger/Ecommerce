@@ -8,7 +8,7 @@ import { registerModalStateObservable, closeRegisterModal } from '../services/Mo
 
 const RegisterModal: React.FC= () => {
   const [isRegisterModalOpen,setIsRegisterModalOpen] = useState(false);
-
+  Modal.setAppElement('#root'); // Replace '#root' with the ID or class of your root element
   useEffect(() => {
     
     const registerSubscription = registerModalStateObservable.subscribe((isOpen) => {
@@ -25,6 +25,7 @@ const RegisterModal: React.FC= () => {
       isOpen={isRegisterModalOpen}
       onRequestClose={closeRegisterModal}
       contentLabel="Register Modal"
+      ariaHideApp={true}
       style={{
         overlay: {
           backgroundColor: 'rgba(0, 0, 0, 0)',

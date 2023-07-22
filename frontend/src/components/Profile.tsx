@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config.js';
+import { Link } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import LogoutButton from './subcomponents/LogoutButton';
+import LoginModal from './LoginModal';
+import { openLoginModal } from '../services/ModalService'
 
 
 enum UserRole {
@@ -9,6 +14,7 @@ enum UserRole {
 }
 
 interface User {
+  userId: string,
   name: string;
   role: UserRole;
 }
@@ -35,7 +41,12 @@ const Profile: React.FC = () => {
       });
 
       const data = response.data;
+
+      const userId:any = await jwt_decode(access_token);
+      
+
       const user: User = {
+        userId: userId.sub,
         name: data.username,
         role: data.roles,
       };
@@ -48,15 +59,42 @@ const Profile: React.FC = () => {
 
   return (
     <div className="max-w-xs min-h-screen mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Profile</h1>
+      
       {profile ? (
+        
+        <div>
+        <h1 className="text-2xl font-bold mb-4">Profile</h1>
         <div>
           <p>Username: {profile.name}</p>
           <p>Authorization: {profile.role}</p>
         </div>
+         <div>
+          <button className='btn-wide'>
+
+          
+         <Link to={`../orders/${profile.userId}`}><p className='text-black-500'>Orders</p></Link>
+         </button>
+         </div>
+         
+              <LogoutButton style={`btn-wide`}/>
+         
+         </div>
       ) : (
-        <p>Loading...</p>
+        <>
+        <div className="relative ml-3 flex flex-col justify-center items-center">
+              <p className='p-5'>Session Expired</p>
+              <button className='btn-wide-contrast'
+                onClick={openLoginModal}>
+                Login
+              </button>
+              <LoginModal/>
+              <div className="absolute right-0 z-10 mt-2 w-48 origin-top-right" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
+              
+              </div>
+            </div>
+        </>
       )}
+     
     </div>
   );
 };

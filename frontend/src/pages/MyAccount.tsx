@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Profile from '../components/Profile';
+import jwt_decode from 'jwt-decode'
+import { Link } from 'react-router-dom';
 
 const MyAccount: React.FC = () => {
   return (

@@ -1,21 +1,14 @@
 
 
-import React, { useEffect, useState, ChangeEvent, MouseEvent } from 'react';
-import axios,  { AxiosResponse }from 'axios';
+import React, { useEffect, useState } from 'react';
 import '../styles/products.css';
-import { ic_done } from 'react-icons-kit/md/ic_done';
 import { Icon } from 'react-icons-kit';
-import { BACKEND_URL } from '../config.js';
-import CustomNumberInput from './subcomponents/CustomNumberInput';
-import { addToCart, fetchCart } from '../services/CartServices'
 import { ic_search } from 'react-icons-kit/md/ic_search'
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css'
-import logo from '../webp.webp';
 import { debounce } from 'lodash'; // Import the debounce function from lodash or use a custom debounce implementation
 import {Product} from '../services/Product/ProductInterface'
 import { fetchProductsByCategory, productStateObservable, searchProducts, fetchProducts } from '../services/Product/ProductServices';
-import { ItemDTO } from '../services/Product/ItemDTO';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -46,7 +39,7 @@ const ProductCard: React.FC<Product> = ({
       effect="blur"
       src={image} />
        </div>
-      <h3 className="text-lg font-200 text-black">{name}</h3>
+      <h3 className="text-lg font-200 text-black cool-font">{name}</h3>
       <p className="text-gray-600">${price}</p>
       </div>
 
@@ -89,7 +82,7 @@ const Products: React.FC<ProductProps> = ({ categoryQuery }) => {
     
     <div className="w-full bg-white mx-auto flex flex-col items-center" id="products">
      {categoryQuery !== "poppis" && <div className='flex items-center justify-center p-4'>
-        <div className="relative pt-3 ">
+        <div className="relative pt-3">
           <input 
             id="search"
             className="border border-gray-300 text-md p-2 h-12 rounded-md focus:outline-none focus:ring-none focus:ring-none w-64 pl-10" 

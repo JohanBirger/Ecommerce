@@ -3,5 +3,5 @@ export interface ItemDTO {
     name: string;
     quantity: number; 
     price: number;
-    description: string;
+    subTotalPrice: number;
   }

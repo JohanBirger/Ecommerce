@@ -7,6 +7,9 @@ body {
   margin: 0;
   color: black;
   background-color: white;
+  font-family: 'Open Sans', sans-serif;
+
+  
   
 }
 
@@ -101,6 +104,9 @@ span {
   background-color: transparent;
 }
 
+.cool-font{
+  font-family: 'Noto Sans Mono', monospace !important; 
+}
 
 .nav-fixed {
   position: fixed;
@@ -129,4 +135,9 @@ span {
 
 .input-number {
   -moz-appearance: textfield;
+}
+
+
+.scrollable-row {
+  overflow-y: scroll;
 }

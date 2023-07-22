@@ -9,7 +9,7 @@ interface IconUserProps{
 
 const IconUser: React.FC<IconUserProps> = ({text,styleIcon,styleText}) => (
     <div className="flex items-center">
-    <Icon icon={user} className={styleIcon} />
+    <Icon icon={user} className={styleIcon}  size={24} />
     <p className={styleText}>{text}</p>
     </div>
   
