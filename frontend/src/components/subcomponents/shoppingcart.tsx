@@ -9,7 +9,7 @@ interface IconCartProps {
 
 const IconCart: React.FC<IconCartProps> = ({ text,styleIcon,styleText }) => (
   <div className="flex items-center justify-center">
-    <Icon icon={cart} className={styleIcon} />
+    <Icon icon={cart} className={styleIcon} size={24} />
     <p className={styleText}>{text}</p>
   </div>
 );

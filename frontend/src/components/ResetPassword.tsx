@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
-import { verify } from 'crypto';
 import { openLoginModal } from '../services/ModalService';
 
 const ResetPassword: React.FC = () => {
@@ -40,7 +39,7 @@ const ResetPassword: React.FC = () => {
 
   const comparePass = async ()=>{
     console.log("comparePass")
-    if(password == passwordVerify){
+    if(password === passwordVerify){
         await setPasswordMatch(true);
     }
     else{

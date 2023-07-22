@@ -1,6 +1,5 @@
-import React from 'react';
 import {Link} from 'react-router-dom';
-import '../index.css'
+import '../../index.css'
 
 const Footer = () => {
   return (
@@ -13,10 +12,10 @@ const Footer = () => {
                 <Link to="/security" className="hover:text-gray-300">Privacy Policy</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300">Terms</a>
+              <Link to="/" className="hover:text-gray-300">Terms</Link>
               </li>
               <li>
-                <a href="#" className="hover:text-gray-300">Cookie Policy</a>
+                <Link to="/" className="hover:text-gray-300">Coookie Policy</Link>
               </li>
               <li>
                 <Link to="/security" className="hover:text-gray-300">Security Policy</Link>

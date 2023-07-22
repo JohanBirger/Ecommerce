@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { BACKEND_URL } from '../config';
+import React from 'react';
+
 import RequestResetPassword from '../components/RequestPasswordReset';
 
 const RequestResetPasswordPage: React.FC = () => {

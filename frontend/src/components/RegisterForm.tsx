@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config.js';
 import { closeRegisterModal } from '../services/ModalService'
-
+import {cross} from 'react-icons-kit/icomoon/cross';
+import {Icon} from 'react-icons-kit';
 
 
 
@@ -35,6 +36,12 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className="max-w-xs mx-auto ">
+         <button 
+        className="absolute top-0 right-0 m-2" 
+        onClick={closeRegisterModal}
+        >
+        <Icon icon = {cross}/>
+      </button>
       <h2 className="text-2xl font-bold mb-2 md:mb-4 text-black">Create Account</h2>
       <form onSubmit={handleRegister} className="space-y-2  md:space-y-4">
         <div>

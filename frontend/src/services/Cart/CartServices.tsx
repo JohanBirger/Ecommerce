@@ -1,14 +1,11 @@
 import { BehaviorSubject } from 'rxjs';
 import jwt_decode from 'jwt-decode';
 import axios from 'axios';
-import { BACKEND_URL } from '../config.js';
-import {Product} from './Product/ProductInterface'
-import { ItemDTO } from './Product/ItemDTO.js';
+import { BACKEND_URL } from '../../config.js';
+import { ItemDTO } from '../Product/ItemDTO.js';
+import { Cart } from './CartInterface.js';
   
-  interface Cart {
-    items: Product[];
-    totalPrice: string;
-  }
+
 // Create a BehaviorSubject for the modal state
 const cartState$ = new BehaviorSubject<Cart | null>(null);
 
@@ -45,6 +42,16 @@ export const fetchCart = async () => {
     }
   };
 
+  export const getCart = async() =>{
+    return cartState$.value
+  }
+
+  export const getCartById = async(cartId:string) =>{
+    const cart = await axios.get(`${BACKEND_URL}/cart/${cartId}`)
+    console.log('getCartbyId:',cart)
+    return cart.data
+  }
+
   export const addToCart = async (productId: string, quantity: number) => {
     try {
       const access_token = localStorage.getItem('access_token');
@@ -67,7 +74,7 @@ export const fetchCart = async () => {
           name: product.name,
           quantity,
           price: product.price,
-          description: product.description,
+          subTotalPrice: (quantity*product.price)
         };
 
         console.log(itemDTO)
@@ -94,7 +101,7 @@ export const fetchCart = async () => {
           name: product.name,
           quantity,
           price: product.price,
-          description: product.description,
+          subTotalPrice: (quantity*product.price)
         };
       
         await axios.post(`${BACKEND_URL}/cart/`, itemDTO, { withCredentials: true });
@@ -126,7 +133,7 @@ export const fetchCart = async () => {
         });
       }
 
-      fetchCart();
+      await fetchCart();
       console.log("Item removed");
     } catch (error) {
       console.error('Error removing item from cart:', error);

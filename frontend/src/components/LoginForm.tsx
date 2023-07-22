@@ -1,11 +1,12 @@
 import React, { useState, FormEvent } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import RegisterModal from './RegisterModal';
-import { BACKEND_URL } from '../config.js';
 import { openRegisterModal } from '../services/ModalService'
 import { closeLoginModal } from '../services/ModalService'
-
+import { loginUser } from '../services/sessionService';
+import { fetchCart } from '../services/Cart/CartServices';
+import {cross} from 'react-icons-kit/icomoon/cross';
+import {Icon} from 'react-icons-kit';
 
 
 const LoginForm: React.FC = () => {
@@ -18,30 +19,24 @@ const LoginForm: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    try {
-      const response = await axios.post(`${BACKEND_URL}/auth/login`, {
-        email: email,
-        password: password,
-      });
-
-      // Store the access token in local storage or state
-      const { access_token } = response.data;
-      await localStorage.setItem('access_token', access_token);
-      setStatus('Success');
-      // Redirect to the desired page or perform other actions
+      const status = await loginUser(email,password);
+      setStatus(status);
+      fetchCart();
       closeLoginModal();
 
       navigate('/',{ replace: true });
       
-    } catch (error: any) {
-      
-      console.error('Registration error:', error.response?.data.message || error.message);
-      setStatus(error.response?.data.message || error.message);
-    }
+  
   };
 
   return (
     <div className="max-w-xs mx-auto">
+         <button 
+        className="absolute top-0 right-0 m-2" 
+        onClick={closeLoginModal}
+        >
+        <Icon icon = {cross}/>
+      </button>
       <h2 className="text-2xl font-bold mb-2 md:mb-4 text-black">Login</h2>
       <form onSubmit={handleSubmit} className="space-y-2 md:space-y-4">
         <div>

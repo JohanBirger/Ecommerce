@@ -1,37 +1,39 @@
 import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
-import LoginForm from './LoginForm';
-import { loginModalStateObservable, closeLoginModal } from '../services/ModalService'
+import Metamask from './Metamask';
+import { metamaskModalStateObservable, closeMetamaskModal } from '../../services/ModalService'
 
 
 
-const LoginModal: React.FC = () => {
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+const MetamaskModal: React.FC = () => {
+  const [isMetamaskModalOpen, setIsMetamaskModalOpen] = useState(false);
   Modal.setAppElement('#root'); // Replace '#root' with the ID or class of your root element
   useEffect(() => {
-    const registerSubscription = loginModalStateObservable.subscribe((isOpen) => {
-      setIsLoginModalOpen(isOpen);
+    const metamaskSubscription = metamaskModalStateObservable.subscribe((isOpen) => {
+        setIsMetamaskModalOpen(isOpen);
+        sessionStorage.setItem('metamaskModalOpen',JSON.stringify(isOpen));
     });
   
     return () => {
-      registerSubscription.unsubscribe();
+      
+      metamaskSubscription.unsubscribe();
     };
   }, []);
 
   return (
     <Modal
-        isOpen={isLoginModalOpen}
-        onRequestClose={closeLoginModal}
-        contentLabel="Login Modal"
+        isOpen={isMetamaskModalOpen}
+        onRequestClose={closeMetamaskModal}
         ariaHideApp={true}
         shouldCloseOnOverlayClick={false}
+        contentLabel="Login Modal"
         style={{
         overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
         },
         content: {
             width: 'auto',
-            maxWidth: '24rem',
+            maxWidth: '30rem',
             maxHeight: '30rem',
             height: 'auto',
             margin: 'auto',
@@ -43,9 +45,9 @@ const LoginModal: React.FC = () => {
         },
         }}
     >
-        <LoginForm/>
+        <Metamask/>
     </Modal>   
   );
 };
 
-export default LoginModal;
+export default MetamaskModal;
