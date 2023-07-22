@@ -122,7 +122,7 @@ const NavLanding = () => {
           (<>
           <div className="relative ml-3">
               
-              <button className='btn-wide-contrast'
+              <button className='btn-nav'
                 onClick={openLoginModal}>
                 Login
               </button>

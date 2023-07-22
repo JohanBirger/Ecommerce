@@ -144,7 +144,7 @@ const Metamask = () => {
           }
         };
         
-      }, [isPaymentConfirmed]);
+      }, [amount,isPaymentConfirmed]);
 
 
 
