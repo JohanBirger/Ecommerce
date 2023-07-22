@@ -390,6 +390,7 @@ const PaymentSettings =  ({ showInputs, settings, isPaymentInitiated }: { showIn
   }
   
   return  (
+  
     <div className="flex flex-col items-center justify-center mx-auto max-w-full">
       <CloseButton closeMetamaskModal={closeMetamaskModal} />
       <TransactionConfirmed isPaymentConfirmed={isPaymentConfirmed} confirmationProgress={confirmationProgress}/>
@@ -405,6 +406,7 @@ const PaymentSettings =  ({ showInputs, settings, isPaymentInitiated }: { showIn
       />
       <TransactionLink transactionHash={transactionHash} />
     </div>
+    
   )
 }
 export default Metamask;

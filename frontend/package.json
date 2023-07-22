@@ -12,9 +12,8 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
+    "@types/jwt-decode": "^3.1.0",
     "@types/node": "^16.18.38",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
     "@types/react-router-hash-link": "^2.4.6",
     "@types/uuid": "^9.0.2",
     "autoprefixer": "^10.4.14",
@@ -58,6 +57,8 @@
   "browserslist": {
     "production": [
       ">0.2%",
+      "not ie <= 99",
+      "not android <= 4.4.4",
       "not dead",
       "not op_mini all"
     ],
@@ -70,6 +71,8 @@
   "devDependencies": {
     "@types/js-cookie": "^3.0.3",
     "@types/lodash": "^4.14.195",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@types/react-lazy-load-image-component": "^1.5.3",
     "@types/react-modal": "^3.16.0",
     "tailwindcss": "^3.3.2"
