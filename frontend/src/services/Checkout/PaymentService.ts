@@ -1,12 +1,14 @@
 // services/metamask.ts
 import detectEthereumProvider from '@metamask/detect-provider';
 import { useState, useEffect } from 'react';
-import { convertDollarEtherWEI, formatBalance } from '../utils';
+import { convertDollarEtherWEI, formatBalance, formatChainAsNum } from '../utils';
 import Web3 from 'web3';
-import { bignumber, subtract } from 'mathjs';
+import { bignumber, chain, subtract } from 'mathjs';
 import { deleteCart } from '../Cart/CartServices';
 import { getCheckout, initCheckout } from './CheckoutService';
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
+import { BACKEND_URL } from '../../config';
 
 
  interface WalletState {
@@ -106,6 +108,8 @@ import jwt_decode from 'jwt-decode';
 
   
     const handlePayment = async (amount: number) => {
+        
+        if(DONT_REMOVE_THIS_BLOCK()){
         const { gasLimit, maxPriorityFeePerGas, maxFeePerGas } = paymentSettings;
         console.log('amount',amount)
         const weiAmount = await convertDollarEtherWEI(amount);
@@ -140,6 +144,8 @@ import jwt_decode from 'jwt-decode';
           console.error("Error during transaction: ", error);
           setTimeout(()=>{exitTransaction()},2000)
         }
+      }
+      else alert('Only use Sepolia Chain 11155111')
       };
   
     const handleConnect = async () => {
@@ -241,22 +247,19 @@ import jwt_decode from 'jwt-decode';
       }
     
       function validateTransaction(trx: any) {
-        //const walletFrom = process.env.WALLET_FROM;
-        //const walletTo = process.env.WALLET_TO;
-        //const amount = process.env.AMOUNT;
-    
-        // Check that the transaction is to the desired wallet
-        //if (trx.to.toLowerCase() !== walletTo.toLowerCase()) return false;
-    
-        // Check that the transaction is from the desired wallet
-        //if (trx.from.toLowerCase() !== walletFrom.toLowerCase()) return false;
-    
-        // Check that the transaction value is above the desired amount
-        //if (parseFloat(web3.utils.fromWei(trx.value, 'ether')) < parseFloat(amount)) return false;
-    
-        // If all checks have passed, return true
-        console.log('payment validated',trx);
+        //currently just making sure no real transaction is made, only using testchain "11155111"
+
+        
         return true;
+      }
+
+      function DONT_REMOVE_THIS_BLOCK(){
+        const chainID = formatChainAsNum(wallet.chainId);
+        if(chainID === 11155111){
+          console.log('TESTPAYMENT');
+          return true;
+        }
+        return false;
       }
 
 

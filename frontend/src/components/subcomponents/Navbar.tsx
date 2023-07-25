@@ -6,7 +6,7 @@ import LogoutButton from './../subcomponents/LogoutButton';
 import IconCart from './../subcomponents/shoppingcart'
 import IconUser from './../subcomponents/userIcon';
 import LoginModal from '../../components/LoginModal';
-import { openLoginModal } from '../../services/ModalService'
+import { openLoginModal } from '../../services/Modals/ModalService'
 import {sessionStateObservable } from '../../services/sessionService';
 import { HashLink } from 'react-router-hash-link';
 

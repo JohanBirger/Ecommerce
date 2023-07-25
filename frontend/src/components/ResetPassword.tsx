@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config';
 import { useParams, useNavigate } from 'react-router-dom';
-import { openLoginModal } from '../services/ModalService';
+import { openLoginModal } from '../services/Modals/ModalService';
 
 const ResetPassword: React.FC = () => {
   const [password, setPassword] = useState('');

@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
-import { deleteCart } from './Cart/CartServices';
-import { useMetamask } from './Checkout/PaymentService';
+import { deleteCart } from '../Cart/CartServices';
+import { useMetamask } from '../Checkout/PaymentService';
 
 // Create a BehaviorSubject for the modal state
 const loginModalState$ = new BehaviorSubject(false);
@@ -28,7 +28,8 @@ export const closeRegisterModal = () => {
 
 export const openMetamaskModal = () => {
   metamaskModalState$.next(true);
-  sessionStorage.setItem('metamaskModal',JSON.stringify(true))
+  sessionStorage.setItem('metamaskModal',JSON.stringify(true));
+  alert('Please only use SEPOLIA if you want to test the paymentprocess. The NFT are not real yet.');
 };
 
 export const closeMetamaskModal = () => {

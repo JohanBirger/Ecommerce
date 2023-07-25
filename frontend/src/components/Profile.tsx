@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import LogoutButton from './subcomponents/LogoutButton';
 import LoginModal from './LoginModal';
-import { openLoginModal } from '../services/ModalService'
+import { openLoginModal } from '../services/Modals/ModalService'
 
 
 enum UserRole {

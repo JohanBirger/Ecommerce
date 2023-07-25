@@ -4,7 +4,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 import { Link } from 'react-router-dom';
 import { getCheckout } from '../../services/Checkout/CheckoutService';
 import {ethers}  from 'ethers'; 
-import { closeMetamaskModal } from '../../services/ModalService';
+import { closeMetamaskModal } from '../../services/Modals/ModalService';
 
 import {cross} from 'react-icons-kit/icomoon/cross';
 import {Icon} from 'react-icons-kit';

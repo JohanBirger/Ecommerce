@@ -1,7 +1,7 @@
 import Modal from 'react-modal';
 import RegisterForm from './RegisterForm';
 import {useState,useEffect} from 'react';
-import { registerModalStateObservable, closeRegisterModal } from '../services/ModalService'
+import { registerModalStateObservable, closeRegisterModal } from '../services/Modals/ModalService'
 
 
 
