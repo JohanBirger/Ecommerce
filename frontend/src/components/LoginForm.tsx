@@ -1,8 +1,8 @@
 import React, { useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import RegisterModal from './RegisterModal';
-import { openRegisterModal } from '../services/ModalService'
-import { closeLoginModal } from '../services/ModalService'
+import { openRegisterModal } from '../services/Modals/ModalService'
+import { closeLoginModal } from '../services/Modals/ModalService'
 import { loginUser } from '../services/sessionService';
 import { fetchCart } from '../services/Cart/CartServices';
 import {cross} from 'react-icons-kit/icomoon/cross';

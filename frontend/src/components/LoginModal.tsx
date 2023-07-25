@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
 import LoginForm from './LoginForm';
-import { loginModalStateObservable, closeLoginModal } from '../services/ModalService'
+import { loginModalStateObservable, closeLoginModal } from '../services/Modals/ModalService'
 
 
 
 const LoginModal: React.FC = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  Modal.setAppElement('#root'); // Replace '#root' with the ID or class of your root element
+  Modal.setAppElement('#root');
   useEffect(() => {
     const registerSubscription = loginModalStateObservable.subscribe((isOpen) => {
       setIsLoginModalOpen(isOpen);

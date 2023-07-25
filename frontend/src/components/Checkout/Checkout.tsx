@@ -5,7 +5,7 @@ import { getSession } from '../../services/sessionService';
 import { Cart } from '../../services/Cart/CartInterface';
 import { FaEthereum } from 'react-icons/fa';
 import MetamaskModal from './MetamaskModal';
-import {openMetamaskModal} from '../../services/ModalService'
+import {openMetamaskModal} from '../../services/Modals/ModalService'
 import jwt_decode from 'jwt-decode'
 
 const CheckoutComponent: React.FC = () => {

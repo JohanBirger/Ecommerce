@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { BACKEND_URL } from '../config.js';
-import { closeRegisterModal } from '../services/ModalService'
+import { closeRegisterModal } from '../services/Modals/ModalService'
 import {cross} from 'react-icons-kit/icomoon/cross';
 import {Icon} from 'react-icons-kit';
 

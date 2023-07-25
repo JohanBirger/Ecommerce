@@ -1,7 +1,7 @@
 import React, {useState, useEffect}from 'react';
 import LoginModal from '../components/LoginModal'
 import Products from '../components/Products';
-import {openLoginModal } from '../services/ModalService';
+import {openLoginModal } from '../services/Modals/ModalService';
 import Header from '../components/subcomponents/Header'
 import { sessionStateObservable } from '../services/sessionService'
 

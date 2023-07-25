@@ -43,6 +43,9 @@ export const initCheckout = async (cart: Cart, user: string, txHash:string,disco
   try {
     const response = await axios.post(`${BACKEND_URL}/checkout/init`, checkoutData);
     console.log('Successfully saved to database', response.data);
+    
+    const responseOrderSent = await axios.post(`${BACKEND_URL}/user/${user}/sendorder`,{checkoutData});
+    console.log('Successfully sent Order',responseOrderSent.data)
   } catch (error) {
     console.error('Failed to save to database', error);
   }

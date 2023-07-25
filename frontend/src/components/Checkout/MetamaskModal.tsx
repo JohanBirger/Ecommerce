@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import Modal from 'react-modal';
 import Metamask from './Metamask';
-import { metamaskModalStateObservable, closeMetamaskModal } from '../../services/ModalService'
+import { metamaskModalStateObservable, closeMetamaskModal } from '../../services/Modals/ModalService'
 
 
 
